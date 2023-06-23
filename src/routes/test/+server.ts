@@ -14,7 +14,6 @@ export const GET = async ({}) => {
 	const data = {
 		filePath,
 		cwd: process.cwd(),
-		__filename,
 		__dirname
 	};
 
