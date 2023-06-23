@@ -1,21 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
+import { fileURLToPath } from 'url';
+
+const getDirname = () => path.dirname(fileURLToPath(import.meta.url));
+
 export const GET = async ({}) => {
-	// get the current file path:
-	const __filename = path.resolve(import.meta.url);
-
-	// read all files in the folder of __filename using node fs module:
-
-	const filesHere = fs.readdirSync(path.dirname(__filename));
-
-	// const files = fs.readdirSync(path.resolve('./src/routes/test'));
+	const filePath = fileURLToPath(import.meta.url);
 
 	// get current absolute path:
 	const __dirname = path.resolve();
 
 	const data = {
-		filesHere,
+		filePath,
+		cwd: process.cwd(),
 		__filename,
 		__dirname
 	};
