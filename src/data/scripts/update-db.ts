@@ -1,11 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { makeLogger } from '../../utils/log';
-import type {
-	CommunityEntry,
-	FediAPICommunityEntry,
-	FediAPIInstance,
-	InstanceEntry
-} from '../types';
+import type { FediAPICommunityEntry, FediAPIInstance } from '../types';
 const log = makeLogger('update-db');
 
 const getFediAPIEntries = async <T>(url: string) => {
@@ -18,13 +13,16 @@ const getFediAPIEntries = async <T>(url: string) => {
 const main = async () => {
 	const prisma = new PrismaClient();
 
+	log('Removing old entries...');
+
+	await prisma.instance.deleteMany({});
+	await prisma.community.deleteMany({});
+
 	log('Fetching instances...');
 
 	const apiInstances = await getFediAPIEntries<FediAPIInstance[]>(
 		'https://lemmymap.feddit.de/instances.json'
 	);
-
-	prisma.instance.deleteMany({});
 
 	// I'm treating domains as the unique key here
 	// Perhaps I should revisit that in the future, but
@@ -32,8 +30,10 @@ const main = async () => {
 	// would share the same domain.
 	// OK, I need to get a paid job instead of working on this.
 	const usedDomains = new Set<string>();
+
+	const urlToDomain = (url: string) => new URL(url).host;
 	const uniqueInstances = apiInstances.filter((instance) => {
-		const domain = new URL(instance.site_view.site.actor_id).host;
+		const domain = urlToDomain(instance.site_view.site.actor_id);
 		if (usedDomains.has(domain)) return false;
 
 		usedDomains.add(domain);
@@ -41,10 +41,11 @@ const main = async () => {
 	});
 
 	log('Inserting the new instance list...');
+
 	await Promise.all(
 		uniqueInstances.map((fediEntry) => {
 			const payload = {
-				domain: new URL(fediEntry.site_view.site.actor_id).host,
+				domain: urlToDomain(fediEntry.site_view.site.actor_id),
 				name: fediEntry.site_view.site.name,
 				icon: fediEntry.site_view.site.icon,
 				banner: fediEntry.site_view.site.banner
@@ -72,28 +73,48 @@ const main = async () => {
 
 	const apiCommunities = await getFediAPIEntries<FediAPICommunityEntry[]>(communityURL);
 
-	log('Removing all communities from the database...');
-	await prisma.community.deleteMany({});
-
 	log('Inserting the new community list...');
+
+	console.dir(apiCommunities[0], { depth: null });
+
+	// Some communities point to instances that are not in the instance list.
+	const missedDomains = new Set<string>();
 	await Promise.all(
 		apiCommunities.map((fediEntry) => {
-			return prisma.community.create({
-				data: {
-					name: fediEntry.community.name,
-					title: fediEntry.community.title,
-					description: fediEntry.community.description,
-					nsfw: fediEntry.community.nsfw,
-					icon: fediEntry.community.icon || null,
-					banner: fediEntry.community.banner || null,
-					countSubscribers: fediEntry.counts.subscribers,
-					countPosts: fediEntry.counts.posts,
-					countComments: fediEntry.counts.comments,
-					countUsersActiveDay: fediEntry.counts.users_active_day
-				}
-			});
+			const domain = urlToDomain(fediEntry.community.actor_id);
+			return prisma.community
+				.create({
+					data: {
+						name: fediEntry.community.name,
+						title: fediEntry.community.title,
+						description: fediEntry.community.description,
+						nsfw: fediEntry.community.nsfw,
+						icon: fediEntry.community.icon || null,
+						banner: fediEntry.community.banner || null,
+						countSubscribers: fediEntry.counts.subscribers,
+						countPosts: fediEntry.counts.posts,
+						countComments: fediEntry.counts.comments,
+						countUsersActiveDay: fediEntry.counts.users_active_day,
+						instance: {
+							connect: {
+								domain: fediEntry.url
+							}
+						}
+					}
+				})
+				.catch((error) => {
+					log(`Error inserting ${domain}: ${error}`);
+					missedDomains.add(domain);
+				});
 		})
 	);
+
+	if (missedDomains.size == 0) {
+		log('All communities inserted successfully (no mismatched domains)');
+	} else {
+		log('Some communities were not inserted due to mismatched domains:');
+		console.log(missedDomains);
+	}
 };
 
 main();

@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Instance {
+  id          Int         @id @default(autoincrement())
+  domain      String      @unique
+  name        String
+  icon        String?
+  banner      String?
+  communities Community[]
+}
+
 model Community {
   id          Int     @id @default(autoincrement())
   name        String
@@ -20,16 +29,10 @@ model Community {
   icon   String?
   banner String?
 
-  countSubscribers    Int @default(0)
-  countPosts          Int @default(0)
-  countComments       Int @default(0)
-  countUsersActiveDay Int @default(0)
-}
-
-model Instance {
-  id     Int     @id @default(autoincrement())
-  domain String  @unique
-  name   String
-  icon   String?
-  banner String?
+  countSubscribers    Int       @default(0)
+  countPosts          Int       @default(0)
+  countComments       Int       @default(0)
+  countUsersActiveDay Int       @default(0)
+  instance            Instance? @relation(fields: [instanceId], references: [id])
+  instanceId          Int?
 }
