@@ -1,6 +1,5 @@
-import { fail, type Actions } from '@sveltejs/kit';
-import { wait } from '../utils/wait.js';
 import { PrismaClient } from '@prisma/client';
+import { fail, type Actions } from '@sveltejs/kit';
 
 const client = new PrismaClient();
 
@@ -42,11 +41,13 @@ export const actions: Actions = {
 
 export const load = async (event) => {
 	return {
-		topCommunities: await client.community.findMany({
-			orderBy: {
-				countSubscribers: 'desc'
-			},
-			take: 5
-		})
+		deferred: {
+			topCommunities: await client.community.findMany({
+				orderBy: {
+					countSubscribers: 'desc'
+				},
+				take: 6
+			})
+		}
 	};
 };

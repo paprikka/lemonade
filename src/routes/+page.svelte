@@ -37,6 +37,26 @@
 		{:else}
 			<p>Search for a community</p>
 		{/if}
+
+		<section>
+			<h2>Top communities</h2>
+			{#await data.deferred.topCommunities}
+				<p>Loading...</p>
+			{:then topCommunities}
+				<ul class="search-results">
+					{#each topCommunities as community}
+						<li>
+							<CommunitySearchItem
+								on:select={() => {
+									selectedCommunity = community;
+								}}
+								{community}
+							/>
+						</li>
+					{/each}
+				</ul>
+			{/await}
+		</section>
 	</main>
 	<footer>footer</footer>
 </div>
