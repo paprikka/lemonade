@@ -40,14 +40,16 @@ export const actions: Actions = {
 };
 
 export const load = async (event) => {
+	const topCommunities = await client.community.findMany({
+		orderBy: {
+			countSubscribers: 'desc'
+		},
+		take: 6
+	});
+	console.log('topCommunities', topCommunities);
 	return {
 		deferred: {
-			topCommunities: await client.community.findMany({
-				orderBy: {
-					countSubscribers: 'desc'
-				},
-				take: 6
-			})
+			topCommunities
 		}
 	};
 };
