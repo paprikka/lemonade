@@ -59,6 +59,11 @@
 			{/await}
 		</section>
 	</main>
+	{#await data.deferred.asyncFoo then foo}
+		<p>{foo}</p>
+	{:catch error}
+		<p>{error.message}</p>
+	{/await}
 	<footer>footer</footer>
 </div>
 

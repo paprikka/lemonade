@@ -49,7 +49,10 @@ export const load = async (event) => {
 	console.log('topCommunities', topCommunities);
 	return {
 		deferred: {
-			topCommunities
+			topCommunities,
+			asyncFoo: new Promise((resolve) =>
+				setTimeout(() => resolve('asyncFoo ' + Math.random()), 1000)
+			)
 		},
 		foo: Date.now()
 	};
