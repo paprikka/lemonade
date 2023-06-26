@@ -26,6 +26,7 @@
 		--color-text-inverted: #ffffff;
 		--color-bg: #fffbdd;
 		--color-accent-1: #e5d876;
+		--color-accent-1-20: #e5d87636;
 		--color-accent-2: #ffa580;
 		--color-link: var(--color-accent-2);
 

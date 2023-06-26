@@ -1,8 +1,12 @@
-<script>
+<script lang="ts">
+	import type { Community } from '@prisma/client';
 	import CommunitySearchItem from '../components/community-search-item.svelte';
+	import CommunityDetail from '../components/community-detail.svelte';
 
 	export let form;
 	export let data;
+
+	let selectedCommunity: Community | null = null;
 </script>
 
 <div class="page-container">
@@ -17,11 +21,17 @@
 		</form>
 	</header>
 	<main>
-		{JSON.stringify(data.topCommunities.map((c) => c.name))}
 		{#if form?.communities?.length}
 			<ul class="search-results">
 				{#each form.communities as community}
-					<li><CommunitySearchItem {community} /></li>
+					<li>
+						<CommunitySearchItem
+							on:select={() => {
+								selectedCommunity = community;
+							}}
+							{community}
+						/>
+					</li>
 				{/each}
 			</ul>
 		{:else}
@@ -30,6 +40,10 @@
 	</main>
 	<footer>footer</footer>
 </div>
+
+{#if selectedCommunity}
+	<CommunityDetail community={selectedCommunity} on:close={() => (selectedCommunity = null)} />
+{/if}
 
 <style>
 	.page-container {

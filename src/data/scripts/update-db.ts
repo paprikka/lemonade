@@ -18,6 +18,9 @@ const main = async () => {
 	await prisma.instance.deleteMany({});
 	await prisma.community.deleteMany({});
 
+	console.assert((await prisma.community.count()) === 0);
+	console.assert((await prisma.instance.count()) === 0);
+
 	log('Fetching instances...');
 
 	const apiInstances = await getFediAPIEntries<FediAPIInstance[]>(
@@ -44,17 +47,12 @@ const main = async () => {
 
 	await Promise.all(
 		uniqueInstances.map((fediEntry) => {
-			const payload = {
-				domain: urlToDomain(fediEntry.site_view.site.actor_id),
-				name: fediEntry.site_view.site.name,
-				icon: fediEntry.site_view.site.icon,
-				banner: fediEntry.site_view.site.banner
-			};
-			return prisma.instance.upsert({
-				create: payload,
-				update: payload,
-				where: {
-					domain: payload.domain
+			return prisma.instance.create({
+				data: {
+					domain: urlToDomain(fediEntry.site_view.site.actor_id),
+					name: fediEntry.site_view.site.name,
+					icon: fediEntry.site_view.site.icon,
+					banner: fediEntry.site_view.site.banner
 				}
 			});
 		})
@@ -95,6 +93,8 @@ const main = async () => {
 						countPosts: fediEntry.counts.posts,
 						countComments: fediEntry.counts.comments,
 						countUsersActiveDay: fediEntry.counts.users_active_day,
+						fullURL: fediEntry.community.actor_id,
+
 						instance: {
 							connect: {
 								domain: fediEntry.url

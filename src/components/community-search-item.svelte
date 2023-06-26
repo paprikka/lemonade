@@ -9,52 +9,69 @@
 		if (n < 1000000) return (n / 1000).toFixed(1) + 'k';
 		return (n / 1000000).toFixed(1) + 'm';
 	};
+
+	import { goto } from '$app/navigation';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 </script>
 
-<div class="container">
-	<div class="thumbnail">
-		{#if community.icon}
-			<img src={community.icon} alt={community.name} loading="lazy" />
-		{/if}
-	</div>
-	<div class="meta">
-		<h3 class="name">{community.name}</h3>
-		<h2 class="title">{community.title}</h2>
+<button class="container" on:click={() => dispatch('select', community)}>
+	<article>
+		<div class="thumbnail">
+			{#if community.icon}
+				<img src={community.icon} alt={community.name} loading="lazy" />
+			{/if}
+		</div>
+		<div class="meta">
+			<h3 class="name">{community.name}</h3>
+			<h2 class="title">{community.title}</h2>
 
-		<ul class="stats">
-			<li>
-				<span class="stat">{formatNumber(community.countUsersActiveDay)}</span>
-				<span class="label">users active today</span>
-			</li>
-			<li>
-				<span class="stat">{formatNumber(community.countComments)}</span>
-				<span class="label">comments</span>
-			</li>
-			<li>
-				<span class="stat">{formatNumber(community.countPosts)}</span>
-				<span class="label">posts</span>
-			</li>
-			<li>
-				<span class="stat">{formatNumber(community.countSubscribers)}</span>
-				<span class="label">subscribers</span>
-			</li>
-		</ul>
-	</div>
-</div>
+			<ul class="stats">
+				<li>
+					<span class="stat">{formatNumber(community.countUsersActiveDay)}</span>
+					<span class="label">users active today</span>
+				</li>
+				<li>
+					<span class="stat">{formatNumber(community.countComments)}</span>
+					<span class="label">comments</span>
+				</li>
+				<li>
+					<span class="stat">{formatNumber(community.countPosts)}</span>
+					<span class="label">posts</span>
+				</li>
+				<li>
+					<span class="stat">{formatNumber(community.countSubscribers)}</span>
+					<span class="label">subscribers</span>
+				</li>
+			</ul>
+		</div>
+	</article>
+</button>
 
 <style>
 	.container {
+		border: none;
+		appearance: none;
+		background: none;
+		text-align: start;
+	}
+
+	.container article {
 		padding: 0.5rem;
 		border-radius: var(--border-radius);
 		display: flex;
 		cursor: pointer;
-		transition: background-color 0.2s ease-in-out;
 	}
 
 	@media (hover: hover) {
-		.container:hover {
-			background-color: var(--color-accent-1);
+		.container:hover article {
+			background-color: var(--color-accent-1-20);
 		}
+	}
+
+	.container:active article {
+		background-color: var(--color-accent-1);
 	}
 
 	.thumbnail {

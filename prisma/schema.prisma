@@ -26,8 +26,9 @@ model Community {
   description String?
   nsfw        Boolean
 
-  icon   String?
-  banner String?
+  icon    String?
+  banner  String?
+  fullURL String
 
   countSubscribers    Int       @default(0)
   countPosts          Int       @default(0)

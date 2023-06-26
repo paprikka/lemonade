@@ -9,7 +9,6 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const query = data.get('query')?.toString() || '';
 		if (!query) return fail(400, { ok: false, message: 'No query provided' });
-		await wait(300);
 
 		const communities = await client.community.findMany({
 			where: {
@@ -33,7 +32,8 @@ export const actions: Actions = {
 			},
 			orderBy: {
 				countSubscribers: 'desc'
-			}
+			},
+			take: 20
 		});
 
 		return { ok: true, query, communities };
