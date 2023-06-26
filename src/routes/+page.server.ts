@@ -50,6 +50,7 @@ export const load = async (event) => {
 	return {
 		deferred: {
 			topCommunities
-		}
+		},
+		foo: Date.now()
 	};
 };

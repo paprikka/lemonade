@@ -21,6 +21,7 @@
 		</form>
 	</header>
 	<main>
+		{data.foo}
 		{#if form?.communities?.length}
 			<ul class="search-results">
 				{#each form.communities as community}
