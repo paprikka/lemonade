@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Instance" ALTER COLUMN "icon" DROP NOT NULL,
+ALTER COLUMN "banner" DROP NOT NULL;

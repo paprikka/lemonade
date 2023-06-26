@@ -25,3 +25,11 @@ model Community {
   countComments       Int @default(0)
   countUsersActiveDay Int @default(0)
 }
+
+model Instance {
+  id     Int     @id @default(autoincrement())
+  domain String  @unique
+  name   String
+  icon   String?
+  banner String?
+}

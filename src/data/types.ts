@@ -60,12 +60,37 @@ export type InstanceEntry = {
 	name: string;
 	icon?: string;
 	banner?: string;
-	languageCodes: string[];
-	federatedInstances: {
-		linked: string[];
-		allowed: string[];
-		blocked: string[];
+	// languageCodes: string[];
+	// federatedInstances: {
+	// 	linked: string[];
+	// 	allowed: string[];
+	// 	blocked: string[];
+	// };
+};
+
+type FediAPIInstanceSite = {
+	name: string;
+	id: number;
+	icon?: string;
+	banner?: string;
+	actor_id: string;
+};
+
+export type FediAPIInstance = {
+	site_view: {
+		site: FediAPIInstanceSite;
 	};
+	federated_instances: {
+		linked: string[] | null;
+		allowed: string[] | null;
+		blocked: string[] | null;
+	};
+	all_languages: {
+		id: number;
+		code: string;
+		name: string;
+	}[];
+	discussion_languages: number[];
 };
 
 export type LanguageEntry = {
