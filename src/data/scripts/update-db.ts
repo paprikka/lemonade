@@ -43,7 +43,13 @@ const main = async () => {
 
 	const fediEntries = await getFediAPIEntries(url);
 
-	const prisma = new PrismaClient();
+	const prisma = new PrismaClient({
+		datasources: {
+			db: {
+				url: 'file:/:memory:'
+			}
+		}
+	});
 
 	log('Removing all communities from the database...');
 	await prisma.community.deleteMany({});

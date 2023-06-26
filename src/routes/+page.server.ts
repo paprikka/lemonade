@@ -40,6 +40,13 @@ export const actions: Actions = {
 	}
 };
 
-export const load = (event) => {
-	return {};
+export const load = async (event) => {
+	return {
+		topCommunities: await client.community.findMany({
+			orderBy: {
+				countSubscribers: 'desc'
+			},
+			take: 5
+		})
+	};
 };

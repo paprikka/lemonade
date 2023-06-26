@@ -2,6 +2,7 @@
 	import CommunitySearchItem from '../components/community-search-item.svelte';
 
 	export let form;
+	export let data;
 </script>
 
 <div class="page-container">
@@ -16,6 +17,7 @@
 		</form>
 	</header>
 	<main>
+		{JSON.stringify(data.topCommunities.map((c) => c.name))}
 		{#if form?.communities?.length}
 			<ul class="search-results">
 				{#each form.communities as community}
