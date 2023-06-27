@@ -1,80 +1,32 @@
 <script lang="ts">
 	import type { Community } from '@prisma/client';
+	import { fade } from 'svelte/transition';
 	import CommunityDetail from '../components/community-detail.svelte';
 	import CommunitySearchItemPlaceholder from '../components/community-search-item-placeholder.svelte';
 	import CommunitySearchItem from '../components/community-search-item.svelte';
 	import Footer from '../components/footer.svelte';
 	import FormItem from '../components/form-item.svelte';
 	import MainSection from '../components/main-section.svelte';
-	import { fade } from 'svelte/transition';
+	import headerIMG from './header-bg.webp';
+	import { debounced } from '../utils/debounced';
+	import Search from '../components/search.svelte';
 
 	export let data;
 
 	let selectedCommunity: Community | null = null;
-
 	let searchResults: Community[] = [];
-	let searchSettings = {
-		query: ''
-	};
-
-	const search = (query: string) => {
-		isSearchActive = true;
-		const params = new URLSearchParams();
-		params.append('query', query);
-
-		fetch('/api/search?' + params.toString())
-			.then((res) => res.json() as Promise<{ communities: Community[] }>)
-			.then((res) => {
-				searchResults = res.communities;
-			})
-			.catch((err) => {
-				console.error(err);
-			})
-			.finally(() => {
-				isSearchActive = false;
-			});
-	};
-
-	const debounced = <T>(fn: (a: T) => void, delay: number) => {
-		let timer: NodeJS.Timeout;
-		return (a: T) => {
-			clearTimeout(timer);
-			timer = setTimeout(() => fn(a), delay);
-		};
-	};
-
-	let isSearchActive = false;
-	const handleSearchInput = debounced((e: Event) => {
-		searchSettings.query = (e.target as HTMLInputElement).value;
-		if (!searchSettings.query) {
-			searchResults = [];
-			return;
-		}
-
-		search(searchSettings.query);
-	}, 300);
+	let searchStatus: 'active' | 'done' | 'error' | 'empty' = 'empty';
 </script>
 
 <div class="page-container">
 	<header>
-		<form>
-			<input
-				type="search"
-				name="query"
-				placeholder="e.g. Handsome priests"
-				value={searchSettings.query}
-				on:input={handleSearchInput}
-			/>
-
-			<div class="settings" hidden>
-				<FormItem label="Include NSFW">
-					<input type="checkbox" name="nsfw" checked={false} />
-				</FormItem>
-			</div>
-		</form>
+		<Search
+			on:results={(e) => (searchResults = e.detail)}
+			on:status={(e) => (searchStatus = e.detail)}
+		/>
 	</header>
 	<main>
-		{#if isSearchActive}
+		{#if searchStatus === 'active'}
 			<ul class="search-results">
 				{#each Array(10) as _}
 					<li>
@@ -96,6 +48,8 @@
 					</li>
 				{/each}
 			</ul>
+		{:else if searchStatus === 'done'}
+			<div class="no-search-placeholder" in:fade>No results</div>
 		{/if}
 
 		<MainSection title="Hot communities">
@@ -157,7 +111,7 @@
 
 <style>
 	.page-container {
-		max-width: 50rem;
+		max-width: 40rem;
 		margin: 0 auto;
 
 		--padding: 1rem;
@@ -170,45 +124,22 @@
 		right: 0;
 		padding: var(--padding);
 		z-index: 1;
+
+		background-color: var(--color-bg);
 	}
 
-	header form {
-		width: 100%;
-		display: flex;
-		justify-content: stretch;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.settings {
-		background-color: white;
-		padding: 1rem;
-		font-size: var(--font-size-xs);
-		border-radius: 0.5rem;
+	header::after {
+		content: '';
+		height: 2rem;
+		position: absolute;
+		bottom: -2rem;
+		left: 0;
+		right: 0;
+		background-image: linear-gradient(var(--color-bg), transparent);
 	}
 
 	main {
 		padding: var(--padding);
-	}
-
-	form input[type='search'] {
-		flex: 1;
-		display: block;
-		background-color: var(--color-accent-1);
-		border: none;
-		border-radius: 0.5rem;
-		font-size: var(--font-size-m);
-		line-height: 3;
-		padding: 0 1rem;
-	}
-
-	form input[type='search']:focus {
-		outline: 0.1rem solid var(--color-text);
-	}
-
-	form input[type='search']::placeholder {
-		mix-blend-mode: multiply;
-		opacity: 0.5;
 	}
 
 	.search-results {
@@ -230,5 +161,15 @@
 
 	.search-results > li {
 		margin: 0;
+	}
+
+	.no-search-placeholder {
+		z-index: 2;
+		position: relative;
+		padding: 1rem;
+		text-align: center;
+		border: 0.1rem solid var(--color-accent-1);
+		border-radius: 0.5rem;
+		background-color: var(--color-accent-1-20);
 	}
 </style>

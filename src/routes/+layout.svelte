@@ -9,7 +9,8 @@
 		margin: 0;
 		padding: 0;
 		font-size: clamp(1rem, calc(1rem + ((1vw - 0.48rem) * 0.6944)), 1.5rem);
-		font-family: Avenir Next, Avenir, Helvetica, sans-serif;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+			Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 		line-height: 1.5;
 
 		--font-size-hero: 3.052rem;
@@ -24,11 +25,11 @@
 
 		--color-text: #222222;
 		--color-text-inverted: #ffffff;
-		--color-bg: #fffbdd;
-		--color-accent-1: #e5d876;
+		--color-bg: #fff;
+		--color-accent-1: rgb(249, 57, 13);
 		--color-accent-1-20: #e5d87636;
 		--color-accent-2: #ffa580;
-		--color-link: var(--color-accent-2);
+		--color-link: var(--color-accent-1);
 
 		--border-radius: 1rem;
 		accent-color: var(--color-accent-2);
