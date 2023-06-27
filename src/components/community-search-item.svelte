@@ -56,6 +56,7 @@
 		background: none;
 		text-align: start;
 		padding: 0;
+		color: var(--color-text);
 	}
 
 	.container:focus-visible {
