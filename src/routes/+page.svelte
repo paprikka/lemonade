@@ -5,11 +5,9 @@
 	import CommunitySearchItemPlaceholder from '../components/community-search-item-placeholder.svelte';
 	import CommunitySearchItem from '../components/community-search-item.svelte';
 	import Footer from '../components/footer.svelte';
-	import FormItem from '../components/form-item.svelte';
 	import MainSection from '../components/main-section.svelte';
-	import headerIMG from './header-bg.webp';
-	import { debounced } from '../utils/debounced';
 	import Search from '../components/search.svelte';
+	import headerIMG from './header-bg.webp';
 
 	export let data;
 
@@ -181,8 +179,9 @@
 		position: relative;
 		padding: 1rem;
 		text-align: center;
-		border: 0.1rem solid var(--color-accent-1);
 		border-radius: 0.5rem;
-		background-color: var(--color-accent-1-20);
+		background-color: rgba(0, 0, 0, 0.1);
+		font-size: var(--font-size-s);
+		opacity: 0.7;
 	}
 </style>

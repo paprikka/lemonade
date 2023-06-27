@@ -14,6 +14,8 @@
 	import Image from './image.svelte';
 
 	const dispatch = createEventDispatcher();
+
+	$: instanceName = new URL(community.fullURL).hostname;
 </script>
 
 <button class="container" on:click={() => dispatch('select', community)}>
@@ -24,7 +26,7 @@
 			{/if}
 		</div>
 		<div class="meta">
-			<h3 class="name">{community.name}</h3>
+			<h3 class="name">{instanceName}/c/{community.name}</h3>
 			<h2 class="title">{community.title}</h2>
 
 			<ul class="stats">

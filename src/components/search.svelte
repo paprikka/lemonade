@@ -43,7 +43,7 @@
 		$searchSettings.query = (e.target as HTMLInputElement).value;
 	}, 300);
 
-	let isSettingsOpen = true;
+	let isSettingsOpen = false;
 	let isInputFocused = false;
 
 	searchSettings.subscribe((settings) => {
@@ -55,15 +55,24 @@
 
 		search(settings);
 	});
+
+	let inputElement: HTMLInputElement;
+	// $: {
+	// 	if (isInputFocused) {
+	// 		const scrollY = inputElement.getBoundingClientRect().top - 20;
+	// 		window.scrollTo({ top: scrollY, behavior: 'smooth' });
+	// 	}
+	// }
 </script>
 
 <form class={$$props.class}>
 	<div class="input-wrapper" class:is-focused={isInputFocused}>
 		<input
+			bind:this={inputElement}
 			type="search"
 			name="query"
 			autocomplete="off"
-			placeholder="e.g. Handsome priests"
+			placeholder="e.g. 'baking' or 'hot priests'"
 			value={$searchSettings.query}
 			on:input={handleSearchInput}
 			on:focus={() => (isInputFocused = true)}

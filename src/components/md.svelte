@@ -17,4 +17,16 @@
 	:global(.md-content > *) {
 		max-width: 100%;
 	}
+
+	.md-content :global(img) {
+		max-width: 100%;
+		height: auto;
+	}
+
+	.md-content :global(hr) {
+		border: none;
+		border: 1px solid var(--color-text);
+		margin: 1rem 0;
+		opacity: 0.3;
+	}
 </style>

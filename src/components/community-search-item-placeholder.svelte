@@ -37,7 +37,7 @@
 		text-align: start;
 		padding: 0;
 
-		animation: pulsate 0.7s infinite linear alternate;
+		animation: pulsate 0.5s infinite linear alternate;
 	}
 
 	@keyframes pulsate {
@@ -68,13 +68,13 @@
 
 	.name {
 		margin: 0;
-		font-size: var(--font-size-s);
+		font-size: var(--font-size-xxs);
 		font-weight: normal;
 		opacity: 0.5;
 	}
 	.title {
 		margin: 0;
-		font-size: var(--font-size-l);
+		font-size: var(--font-size-s);
 		font-weight: 500;
 	}
 
@@ -83,7 +83,7 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		font-size: var(--font-size-s);
+		font-size: var(--font-size-xs);
 		opacity: 0.8;
 	}
 </style>

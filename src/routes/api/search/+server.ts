@@ -41,9 +41,24 @@ export const GET: RequestHandler = async ({ url }) => {
 			AND: [
 				{
 					OR: [
-						{ title: { contains: query } },
-						{ name: { contains: query } },
-						{ description: { contains: query } }
+						{
+							title: {
+								contains: query
+								// mode: 'insensitive'
+							}
+						},
+						{
+							name: {
+								contains: query
+								// mode: 'insensitive'
+							}
+						},
+						{
+							description: {
+								contains: query
+								// mode: 'insensitive'
+							}
+						}
 					]
 				},
 				// TODO: we lost all the nsft communities from the dataset, might need to remove
@@ -54,7 +69,7 @@ export const GET: RequestHandler = async ({ url }) => {
 					? [
 							{
 								countUsersActiveMonth: {
-									gt: 1
+									gte: 1
 								}
 							},
 							{
