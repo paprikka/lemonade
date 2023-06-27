@@ -30,10 +30,11 @@ model Community {
   banner  String?
   fullURL String
 
-  countSubscribers    Int       @default(0)
-  countPosts          Int       @default(0)
-  countComments       Int       @default(0)
-  countUsersActiveDay Int       @default(0)
-  instance            Instance? @relation(fields: [instanceId], references: [id])
-  instanceId          String?
+  countSubscribers      Int       @default(0)
+  countPosts            Int       @default(0)
+  countComments         Int       @default(0)
+  countUsersActiveDay   Int       @default(0)
+  countUsersActiveMonth Int       @default(0)
+  instance              Instance? @relation(fields: [instanceId], references: [id])
+  instanceId            String?
 }

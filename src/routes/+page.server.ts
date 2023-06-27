@@ -40,7 +40,23 @@ export const actions: Actions = {
 };
 
 export const load = async (event) => {
+	const where = {
+		AND: [
+			{
+				countUsersActiveMonth: {
+					gt: 1
+				}
+			},
+			{
+				countSubscribers: {
+					gt: 1
+				}
+			},
+			{ nsfw: false }
+		]
+	};
 	const topCommunities = client.community.findMany({
+		where,
 		orderBy: {
 			countSubscribers: 'desc'
 		},
@@ -48,6 +64,7 @@ export const load = async (event) => {
 	});
 
 	const hotCommunities = client.community.findMany({
+		where,
 		orderBy: {
 			countUsersActiveDay: 'desc'
 		},

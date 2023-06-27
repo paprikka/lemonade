@@ -69,6 +69,7 @@ const main = async () => {
 			countPosts: fediEntry.counts.posts,
 			countComments: fediEntry.counts.comments,
 			countUsersActiveDay: fediEntry.counts.users_active_day,
+			countUsersActiveMonth: fediEntry.counts.users_active_day,
 			fullURL: fediEntry.community.actor_id,
 			instanceId: instanceIDsByDomain.get(urlToDomain(fediEntry.community.actor_id)) || null
 		};
