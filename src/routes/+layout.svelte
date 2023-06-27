@@ -8,7 +8,7 @@
 	:global(html, body) {
 		margin: 0;
 		padding: 0;
-		font-size: clamp(1rem, calc(1rem + ((1vw - 0.48rem) * 0.6944)), 1.5rem);
+		font-size: clamp(1rem, calc(1rem + ((1vw - 0.48rem) * 0.6944)), 1.25rem);
 		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 			Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 		line-height: 1.5;
@@ -27,12 +27,13 @@
 		--color-text-inverted: #ffffff;
 		--color-bg: #fff;
 		--color-accent-1: rgb(249, 57, 13);
-		--color-accent-1-20: #e5d87636;
-		--color-accent-2: #ffa580;
+		--color-accent-1-20: rgba(249, 57, 13, 0.2);
+		--color-accent-2: #f4d184;
+		--color-accent-2-20: rgba(242, 207, 132, 0.2);
 		--color-link: var(--color-accent-1);
 
 		--border-radius: 1rem;
-		accent-color: var(--color-accent-2);
+		accent-color: var(--color-accent-1);
 	}
 
 	:global(body) {

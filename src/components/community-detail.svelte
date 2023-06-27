@@ -86,6 +86,7 @@
 		display: grid;
 		place-content: center;
 		place-items: center;
+		background-color: var(--color-accent-2-20);
 		backdrop-filter: blur(1rem);
 		-webkit-backdrop-filter: blur(1rem);
 	}
@@ -99,13 +100,15 @@
 		display: flex;
 		flex-direction: column;
 		scroll-behavior: smooth;
+		box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
 	}
 
 	@media (min-width: 400px) {
 		.content {
 			position: fixed;
-			margin: 1rem auto 0;
+			margin: 0 auto;
 			max-width: 40rem;
+			inset: 4rem;
 		}
 	}
 

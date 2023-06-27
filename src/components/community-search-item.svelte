@@ -72,16 +72,18 @@
 		border-radius: var(--border-radius);
 		display: flex;
 		cursor: pointer;
+		transition: scale 0.2s;
 	}
 
 	@media (hover: hover) {
 		.container:hover article {
-			background-color: var(--color-accent-1-20);
+			background-color: var(--color-accent-2-20);
 		}
 	}
 
 	.container:active article {
-		background-color: var(--color-accent-1);
+		background-color: var(--color-accent-2);
+		scale: 0.95;
 	}
 
 	.thumbnail {
