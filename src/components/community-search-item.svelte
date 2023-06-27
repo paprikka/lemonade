@@ -10,8 +10,8 @@
 		return (n / 1000000).toFixed(1) + 'm';
 	};
 
-	import { goto } from '$app/navigation';
 	import { createEventDispatcher } from 'svelte';
+	import Image from './image.svelte';
 
 	const dispatch = createEventDispatcher();
 </script>
@@ -20,7 +20,7 @@
 	<article>
 		<div class="thumbnail">
 			{#if community.icon}
-				<img src={community.icon} alt={community.name} loading="lazy" />
+				<Image src={community.icon} alt={community.name} class="thumbnail-img" />
 			{/if}
 		</div>
 		<div class="meta">
@@ -97,7 +97,7 @@
 		background-color: rgba(0, 0, 0, 0.1);
 	}
 
-	.thumbnail img {
+	.thumbnail :global(.thumbnail-img) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;

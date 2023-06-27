@@ -7,6 +7,7 @@
 	import IconButton from './icon-button.svelte';
 	import Md from './md.svelte';
 	import { fade, fly } from 'svelte/transition';
+	import Image from './image.svelte';
 
 	export let community: Community;
 	$: bannerBg = community.banner ? `url(${community.banner})` : undefined;
@@ -37,7 +38,7 @@
 			</nav>
 			<div class="thumbnail">
 				{#if community.icon}
-					<img src={community.icon} alt={community.name} />
+					<Image src={community.icon} alt={community.name} class="thumbnail-img" />
 				{/if}
 			</div>
 			<h4 class="instance-url">{instanceName}</h4>
@@ -115,7 +116,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+		background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)),
 			var(--bgImg);
 
 		background-size: cover;
@@ -204,12 +205,14 @@
 		font-size: var(--font-size-xs);
 	}
 
-	.thumbnail img {
+	.thumbnail :global(.thumbnail-img) {
 		width: var(--img-w);
 		height: auto;
 		vertical-align: bottom;
 		overflow: hidden;
 		border-radius: 0.75rem;
+		aspect-ratio: 1;
+		object-fit: cover;
 	}
 
 	nav {
