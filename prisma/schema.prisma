@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Instance {
-  id          Int         @id @default(autoincrement())
+  id          String      @id
   domain      String      @unique
   name        String
   icon        String?
@@ -20,7 +20,7 @@ model Instance {
 }
 
 model Community {
-  id          Int     @id @default(autoincrement())
+  id          String  @id
   name        String
   title       String
   description String?
@@ -35,5 +35,5 @@ model Community {
   countComments       Int       @default(0)
   countUsersActiveDay Int       @default(0)
   instance            Instance? @relation(fields: [instanceId], references: [id])
-  instanceId          Int?
+  instanceId          String?
 }
