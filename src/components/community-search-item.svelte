@@ -30,7 +30,7 @@
 			<ul class="stats">
 				<li>
 					<span class="stat">{formatNumber(community.countUsersActiveDay)}</span>
-					<span class="label">users active today</span>
+					<span class="label">active today</span>
 				</li>
 				<li>
 					<span class="stat">{formatNumber(community.countComments)}</span>
@@ -109,14 +109,15 @@
 
 	.name {
 		margin: 0;
-		font-size: var(--font-size-s);
+		font-size: var(--font-size-xs);
 		font-weight: normal;
 		opacity: 0.5;
 	}
 	.title {
-		margin: 0;
-		font-size: var(--font-size-l);
-		font-weight: 500;
+		margin: 0.25rem 0 0.5rem;
+		font-size: var(--font-size-m);
+		font-weight: 600;
+		line-height: 1rem;
 	}
 
 	.stats {
@@ -126,7 +127,11 @@
 		margin: 0;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 0 0.5rem;
-		font-size: var(--font-size-s);
-		opacity: 0.8;
+		font-size: var(--font-size-xs);
+		opacity: 0.7;
+	}
+
+	.stats .stat {
+		font-weight: 600;
 	}
 </style>

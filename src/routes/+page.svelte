@@ -20,9 +20,11 @@
 
 <div class="page-container">
 	<header>
+		<img alt="Lemmy" src={headerIMG} />
 		<Search
 			on:results={(e) => (searchResults = e.detail)}
 			on:status={(e) => (searchStatus = e.detail)}
+			class="search"
 		/>
 	</header>
 	<main>
@@ -118,14 +120,13 @@
 	}
 
 	header {
-		position: sticky;
-		top: 0;
-		left: 0;
-		right: 0;
+		position: relative;
 		padding: var(--padding);
 		z-index: 1;
 
 		background-color: var(--color-bg);
+		display: flex;
+		flex-direction: column;
 	}
 
 	header::after {
@@ -136,6 +137,18 @@
 		left: 0;
 		right: 0;
 		background-image: linear-gradient(var(--color-bg), transparent);
+	}
+
+	header > img {
+		max-width: 10rem;
+		align-self: center;
+		height: auto;
+		margin: 2rem 0 3rem;
+	}
+
+	header :global(.search) {
+		position: sticky;
+		top: 1rem;
 	}
 
 	main {

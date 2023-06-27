@@ -57,7 +57,7 @@
 	});
 </script>
 
-<form>
+<form class={$$props.class}>
 	<div class="input-wrapper" class:is-focused={isInputFocused}>
 		<input
 			type="search"
