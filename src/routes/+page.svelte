@@ -3,6 +3,7 @@
 	import CommunitySearchItem from '../components/community-search-item.svelte';
 	import CommunityDetail from '../components/community-detail.svelte';
 	import MainSection from '../components/main-section.svelte';
+	import Footer from '../components/footer.svelte';
 
 	export let form;
 	export let data;
@@ -16,7 +17,7 @@
 			<input
 				type="search"
 				name="query"
-				placeholder="e.g. Handsome priests or #dogs"
+				placeholder="e.g. Handsome priests"
 				value={form?.query ?? ''}
 			/>
 		</form>
@@ -75,7 +76,7 @@
 			{/await}
 		</MainSection>
 	</main>
-	<footer>footer</footer>
+	<Footer />
 </div>
 
 {#if selectedCommunity}
@@ -103,7 +104,6 @@
 		width: 100%;
 		display: flex;
 		justify-content: stretch;
-		background-color: #fff;
 	}
 
 	main {
@@ -141,8 +141,14 @@
 		display: grid;
 		width: 100%;
 		overflow: hidden;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr;
 		gap: 1rem;
+	}
+
+	@media (min-width: 400px) {
+		.search-results {
+			grid-template-columns: repeat(2, 1fr);
+		}
 	}
 
 	.search-results > li {

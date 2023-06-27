@@ -55,6 +55,15 @@
 		appearance: none;
 		background: none;
 		text-align: start;
+		padding: 0;
+	}
+
+	.container:focus-visible {
+		outline: none;
+	}
+	.container:focus-visible article {
+		background-color: var(--color-accent-1-20);
+		box-shadow: inset 0 0 0 0.2rem var(--color-accent-1-20);
 	}
 
 	.container article {
