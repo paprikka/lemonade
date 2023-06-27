@@ -4,28 +4,83 @@
 	import CommunityDetail from '../components/community-detail.svelte';
 	import MainSection from '../components/main-section.svelte';
 	import Footer from '../components/footer.svelte';
+	import FormItem from '../components/form-item.svelte';
+	import CommunitySearchItemPlaceholder from '../components/community-search-item-placeholder.svelte';
+	import SearchResultsPending from '../components/search-results-pending.svelte';
 
 	export let form;
 	export let data;
 
 	let selectedCommunity: Community | null = null;
+
+	let searchResults: Community[] = [];
+	let searchSettings = {
+		query: ''
+	};
+
+	const search = (query: string) => {
+		isSearchActive = true;
+		const params = new URLSearchParams();
+		params.append('query', query);
+
+		fetch('/api/search?' + params.toString())
+			.then((res) => res.json() as Promise<{ communities: Community[] }>)
+			.then((res) => {
+				searchResults = res.communities;
+			})
+			.catch((err) => {
+				console.error(err);
+			})
+			.finally(() => {
+				isSearchActive = false;
+			});
+	};
+
+	const debounced = <T>(fn: (a: T) => void, delay: number) => {
+		let timer: NodeJS.Timeout;
+		return (a: T) => {
+			clearTimeout(timer);
+			timer = setTimeout(() => fn(a), delay);
+		};
+	};
+
+	let isSearchActive = false;
+	const handleSearchInput = debounced((e: Event) => {
+		searchSettings.query = (e.target as HTMLInputElement).value;
+		if (!searchSettings.query) {
+			searchResults = [];
+			return;
+		}
+
+		search(searchSettings.query);
+	}, 300);
 </script>
 
 <div class="page-container">
 	<header>
-		<form action="?/search" method="post">
+		<form>
 			<input
 				type="search"
 				name="query"
 				placeholder="e.g. Handsome priests"
-				value={form?.query ?? ''}
+				value={searchSettings.query}
+				on:input={handleSearchInput}
 			/>
+
+			<div class="settings" hidden>
+				<FormItem label="Include NSFW">
+					<input type="checkbox" name="nsfw" checked={false} />
+				</FormItem>
+			</div>
 		</form>
 	</header>
 	<main>
-		{#if form?.communities?.length}
+		{#if isSearchActive}
+			<SearchResultsPending />
+		{/if}
+		{#if searchResults.length}
 			<ul class="search-results">
-				{#each form.communities as community}
+				{#each searchResults as community}
 					<li>
 						<CommunitySearchItem
 							on:select={() => {
@@ -40,7 +95,7 @@
 
 		<MainSection title="Hot communities">
 			{#await data.deferred.hotCommunities}
-				<p>Loading...</p>
+				<SearchResultsPending />
 			{:then hotCommunities}
 				<ul class="search-results">
 					{#each hotCommunities as community}
@@ -59,7 +114,7 @@
 
 		<MainSection title="Top communities">
 			{#await data.deferred.topCommunities}
-				<p>Loading...</p>
+				<SearchResultsPending />
 			{:then topCommunities}
 				<ul class="search-results">
 					{#each topCommunities as community}
@@ -104,13 +159,18 @@
 		width: 100%;
 		display: flex;
 		justify-content: stretch;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.settings {
+		background-color: white;
+		padding: 1rem;
+		font-size: var(--font-size-xs);
+		border-radius: 0.5rem;
 	}
 
 	main {
-		padding: var(--padding);
-	}
-
-	footer {
 		padding: var(--padding);
 	}
 

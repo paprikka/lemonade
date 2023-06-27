@@ -31,6 +31,7 @@
 		--color-link: var(--color-accent-2);
 
 		--border-radius: 1rem;
+		accent-color: var(--color-accent-2);
 	}
 
 	:global(body) {
