@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { Community } from '@prisma/client';
-	import CommunitySearchItem from '../components/community-search-item.svelte';
 	import CommunityDetail from '../components/community-detail.svelte';
-	import MainSection from '../components/main-section.svelte';
+	import CommunitySearchItemPlaceholder from '../components/community-search-item-placeholder.svelte';
+	import CommunitySearchItem from '../components/community-search-item.svelte';
 	import Footer from '../components/footer.svelte';
 	import FormItem from '../components/form-item.svelte';
-	import CommunitySearchItemPlaceholder from '../components/community-search-item-placeholder.svelte';
-	import SearchResultsPending from '../components/search-results-pending.svelte';
+	import MainSection from '../components/main-section.svelte';
+	import { fade } from 'svelte/transition';
 
-	export let form;
 	export let data;
 
 	let selectedCommunity: Community | null = null;
@@ -76,11 +75,17 @@
 	</header>
 	<main>
 		{#if isSearchActive}
-			<SearchResultsPending />
+			<ul class="search-results">
+				{#each Array(10) as _}
+					<li>
+						<CommunitySearchItemPlaceholder />
+					</li>
+				{/each}
+			</ul>
 		{/if}
 		{#if searchResults.length}
 			<ul class="search-results">
-				{#each searchResults as community}
+				{#each searchResults as community (community.id)}
 					<li>
 						<CommunitySearchItem
 							on:select={() => {
@@ -95,9 +100,15 @@
 
 		<MainSection title="Hot communities">
 			{#await data.deferred.hotCommunities}
-				<SearchResultsPending />
+				<ul class="search-results" transition:fade>
+					{#each Array(6) as _}
+						<li>
+							<CommunitySearchItemPlaceholder />
+						</li>
+					{/each}
+				</ul>
 			{:then hotCommunities}
-				<ul class="search-results">
+				<ul class="search-results" transition:fade>
 					{#each hotCommunities as community}
 						<li>
 							<CommunitySearchItem
@@ -114,11 +125,17 @@
 
 		<MainSection title="Top communities">
 			{#await data.deferred.topCommunities}
-				<SearchResultsPending />
-			{:then topCommunities}
 				<ul class="search-results">
-					{#each topCommunities as community}
+					{#each Array(6) as _}
 						<li>
+							<CommunitySearchItemPlaceholder />
+						</li>
+					{/each}
+				</ul>
+			{:then topCommunities}
+				<ul class="search-results" transition:fade>
+					{#each topCommunities as community}
+						<li transition:fade>
 							<CommunitySearchItem
 								on:select={() => {
 									selectedCommunity = community;

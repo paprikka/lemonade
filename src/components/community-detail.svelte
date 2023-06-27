@@ -6,6 +6,7 @@
 	import backIcon from './icon-back.svg';
 	import IconButton from './icon-button.svelte';
 	import Md from './md.svelte';
+	import { fade, fly } from 'svelte/transition';
 
 	export let community: Community;
 	$: bannerBg = community.banner ? `url(${community.banner})` : undefined;
@@ -18,8 +19,18 @@
 	$: instanceName = new URL(community.fullURL).hostname;
 </script>
 
-<div class="container">
-	<div class="content">
+<div class="container" transition:fade>
+	<div
+		class="content"
+		in:fly={{
+			duration: 400,
+			y: 100
+		}}
+		out:fly={{
+			duration: 400,
+			y: 100
+		}}
+	>
 		<header style:--bgImg={bannerBg}>
 			<nav>
 				<IconButton icon={backIcon} label="Go back" on:click={() => dispatch('close')} />
@@ -217,13 +228,12 @@
 		flex: 1;
 		appearance: none;
 		border: none;
-		border-radius: 0.75rem;
+		border-radius: 0.5rem;
 		font-size: var(--font-size-l);
 		line-height: 3rem;
-		background-color: var(--color-text);
-		color: var(--color-bg);
+		background-color: var(--color-accent-2);
+		color: var(--color-text);
 		font-family: var(--font-family-body);
-		font-weight: bold;
 		cursor: pointer;
 	}
 
