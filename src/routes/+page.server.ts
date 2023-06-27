@@ -47,14 +47,18 @@ export const load = async (event) => {
 		take: 6
 	});
 
+	const hotCommunities = client.community.findMany({
+		orderBy: {
+			countUsersActiveDay: 'desc'
+		},
+		take: 6
+	});
+
 	console.log('topCommunities', topCommunities);
 	return {
 		deferred: {
 			topCommunities,
-			asyncFoo: new Promise((resolve) =>
-				setTimeout(() => resolve('asyncFoo ' + Math.random()), 1000)
-			)
-		},
-		foo: Date.now()
+			hotCommunities
+		}
 	};
 };

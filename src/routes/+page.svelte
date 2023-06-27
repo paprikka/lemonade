@@ -2,6 +2,7 @@
 	import type { Community } from '@prisma/client';
 	import CommunitySearchItem from '../components/community-search-item.svelte';
 	import CommunityDetail from '../components/community-detail.svelte';
+	import MainSection from '../components/main-section.svelte';
 
 	export let form;
 	export let data;
@@ -21,7 +22,6 @@
 		</form>
 	</header>
 	<main>
-		{data.foo}
 		{#if form?.communities?.length}
 			<ul class="search-results">
 				{#each form.communities as community}
@@ -35,12 +35,28 @@
 					</li>
 				{/each}
 			</ul>
-		{:else}
-			<p>Search for a community</p>
 		{/if}
 
-		<section>
-			<h2>Top communities</h2>
+		<MainSection title="Hot communities">
+			{#await data.deferred.hotCommunities}
+				<p>Loading...</p>
+			{:then hotCommunities}
+				<ul class="search-results">
+					{#each hotCommunities as community}
+						<li>
+							<CommunitySearchItem
+								on:select={() => {
+									selectedCommunity = community;
+								}}
+								{community}
+							/>
+						</li>
+					{/each}
+				</ul>
+			{/await}
+		</MainSection>
+
+		<MainSection title="Top communities">
 			{#await data.deferred.topCommunities}
 				<p>Loading...</p>
 			{:then topCommunities}
@@ -57,13 +73,8 @@
 					{/each}
 				</ul>
 			{/await}
-		</section>
+		</MainSection>
 	</main>
-	{#await data.deferred.asyncFoo then foo}
-		<p>{foo}</p>
-	{:catch error}
-		<p>{error.message}</p>
-	{/await}
 	<footer>footer</footer>
 </div>
 
