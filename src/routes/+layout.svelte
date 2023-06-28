@@ -1,3 +1,7 @@
+<script lang="ts">
+	import SocialMeta from '../components/social-meta.svelte';
+</script>
+
 <slot />
 <svelte:head>
 	<script
@@ -7,6 +11,22 @@
 		data-domains="lemmy.sonnet.io,lemonade.sonnet.io"
 		src="https://sonnet-events.vercel.app/umami.js"
 	></script>
+
+	<SocialMeta
+		title="🍋 Lemonade"
+		url="https://lemonade.sonnet.io/"
+		socialImage={{
+			absoluteUrl: 'https://lemonade.sonnet.io/social.png',
+			height: 506,
+			width: 1012
+		}}
+		description="The fruitiest way to browse Lemmy communities."
+		siteConfig={{
+			name: 'Lemonade',
+			twitterCreator: '@rafalpast',
+			twitterSite: '@rafalpast'
+		}}
+	/>
 </svelte:head>
 
 <style>
