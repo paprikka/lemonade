@@ -20,14 +20,16 @@
 	$: instanceName = new URL(community.fullURL).hostname;
 </script>
 
-<div class="container" transition:fade>
+<div class="container" transition:fade={{ duration: 200 }}>
 	<div
 		class="content"
 		in:fly={{
+			delay: 100,
 			duration: 400,
 			y: 100
 		}}
 		out:fly={{
+			delay: 100,
 			duration: 400,
 			y: 100
 		}}

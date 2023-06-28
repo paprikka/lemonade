@@ -6,49 +6,48 @@
 
 <label class:is-block={block}>
 	<slot />
-	<div class="labels">
-		{#if label} <span>{label}</span> {/if}
-		{#if secondaryLabel}
-			<span class="secondary">{secondaryLabel}</span>
-		{/if}
-	</div>
+	{#if label} <span class="primary">{label}</span> {/if}
+	{#if secondaryLabel}
+		<span class="secondary">{secondaryLabel}</span>
+	{/if}
 </label>
 
 <style>
 	label {
+		--font-size-primary: var(--font-size-s);
+		--font-size-secondary: var(--font-size-xs);
 		cursor: pointer;
-		display: flex;
-		align-items: flex-start;
-		line-height: inherit;
-		font-weight: bold;
-		font-size: var(--font-size-s);
-		width: 100%;
+		display: grid;
+		align-content: baseline;
+		align-items: center;
+		font-size: var(--font-size-primary);
+		grid-template-columns: min-content max-content;
+		margin-block-start: 0.2em;
 	}
 
 	.is-block {
-		flex-direction: column-reverse;
-		align-items: stretch;
-		align-content: stretch;
+		grid-template-columns: 100%;
 	}
 
-	.labels {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
+	.primary {
+		font-size: var(--font-size-primary);
+		font-weight: bold;
+		line-height: 1;
 	}
 
 	.secondary {
 		font-weight: 400;
 		opacity: 0.7;
-		font-size: var(--font-size-xs);
+		font-size: var(--font-size-secondary);
+		grid-column: 2/3;
 	}
 
 	label :global(input[type='checkbox']) {
-		line-height: inherit;
-		margin: 0.2em 0.5em 0 0;
+		margin: 0 0.5em 0 0;
+		vertical-align: middle;
 	}
 
 	label :global(select) {
-		width: 100%;
+		font-size: var(--font-size-secondary);
 	}
 </style>

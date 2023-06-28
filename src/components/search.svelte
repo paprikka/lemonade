@@ -65,7 +65,7 @@
 	// }
 </script>
 
-<form class={$$props.class}>
+<form class={$$props.class} on:submit|preventDefault>
 	<div class="input-wrapper" class:is-focused={isInputFocused}>
 		<input
 			bind:this={inputElement}
@@ -100,13 +100,15 @@
 	.input-wrapper {
 		position: relative;
 		display: flex;
-		border: 0.1rem solid var(--color-text);
+		border: 2px solid var(--color-text);
 		border-radius: 0.5rem;
 		overflow: hidden;
+
+		transition: box-shadow 0.2s ease-out;
 	}
 
 	.input-wrapper.is-focused {
-		box-shadow: 0 0 0 0.2rem var(--color-text);
+		box-shadow: 0 0 0 4px var(--color-text);
 	}
 
 	input[type='search'] {

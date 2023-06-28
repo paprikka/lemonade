@@ -3,7 +3,7 @@
 		Made by 🐐 and <a href="https://sonnet.io">Rafal Pastuszak</a>. Come and
 		<a href="https://sonnet.io/posts/hi">say hi</a>.
 	</p>
-	<p class="small">No tracking. My dog ate the cookies 🌻</p>
+	<p class="small">No cookies. My dog ate the cookies 🌻</p>
 </footer>
 
 <style>

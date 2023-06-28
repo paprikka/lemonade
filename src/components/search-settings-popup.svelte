@@ -8,15 +8,16 @@
 </script>
 
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import FormItem from './form-item.svelte';
+
 	export let isOpen = false;
 	export let value: SearchSettings;
 </script>
 
 {#if isOpen}
 	<div class="settings" in:fade={{ duration: 300 }}>
-		<FormItem>
+		<FormItem block>
 			<select bind:value={value.sortBy}>
 				<option value="activity">Activity</option>
 				<option value="subscribers"># of subscribers</option>
@@ -25,13 +26,13 @@
 			</select>
 		</FormItem>
 		<FormItem label="Include NSFW">
-			<input type="checkbox" name="nsfw" bind:checked={value.nsfw} />
+			<input type="checkbox" bind:checked={value.nsfw} />
 		</FormItem>
 		<FormItem
 			label="Skip empty communities"
 			secondaryLabel="Skip communities with no users or recent activity"
 		>
-			<input type="checkbox" name="nsfw" bind:checked={value.skipEmpty} />
+			<input type="checkbox" bind:checked={value.skipEmpty} />
 		</FormItem>
 	</div>
 {/if}

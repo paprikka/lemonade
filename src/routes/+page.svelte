@@ -39,7 +39,7 @@
 						</ul>
 						{#if searchStatus === 'done'}
 							<span class="no-search-label" transition:fade={{ duration: 200 }}
-								>No communities found</span
+								>No communities found.</span
 							>
 						{/if}
 					</div>
