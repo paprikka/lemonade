@@ -55,9 +55,10 @@
 	.container {
 		border: none;
 		appearance: none;
-		background: none;
-		text-align: start;
+		width: 100%;
 		padding: 0;
+		text-align: start;
+		background: none;
 		color: var(--color-text);
 	}
 
