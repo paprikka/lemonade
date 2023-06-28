@@ -6,6 +6,8 @@
 
 	export let size: 'hero' | 'xxxl' | 'xxl' | 'xl' | 'l' | 'm' | 's' | 'xs' | 'xxs' = 'm';
 
+	export let variant: 'default' | 'filled' = 'default';
+
 	const dispatcher = createEventDispatcher();
 </script>
 
@@ -14,6 +16,8 @@
 	aria-label={label}
 	style:--bg={`url(${icon})`}
 	style={`--size: var(--font-size-${size})`}
+	class:is-filled={variant === 'filled'}
+	class:is-default={variant === 'default'}
 />
 
 <style>
@@ -41,14 +45,25 @@
 		vertical-align: bottom;
 	}
 
+	.is-filled {
+		background-color: var(--color-bg);
+		opacity: 0.9;
+		box-shadow: var(--dialog-shadow);
+	}
+
 	@media (hover: hover) {
-		button:hover {
+		.is-default:hover {
 			opacity: 0.7;
 			background-color: rgba(0, 0, 0, 0.1);
+		}
+
+		.is-filled:hover {
+			opacity: 1;
 		}
 	}
 
 	button:active {
 		opacity: 1;
+		scale: 0.97;
 	}
 </style>

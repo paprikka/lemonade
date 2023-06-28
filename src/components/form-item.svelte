@@ -5,8 +5,13 @@
 </script>
 
 <label class:is-block={block}>
-	<slot />
-	{#if label} <span class="primary">{label}</span> {/if}
+	{#if block}
+		{#if label} <span class="primary">{label}</span> {/if}
+		<slot />
+	{:else}
+		<slot />
+		{#if label} <span class="primary">{label}</span> {/if}
+	{/if}
 	{#if secondaryLabel}
 		<span class="secondary">{secondaryLabel}</span>
 	{/if}
@@ -35,6 +40,10 @@
 		line-height: 1;
 	}
 
+	.is-block .primary {
+		margin-block-end: 0.5em;
+	}
+
 	.secondary {
 		font-weight: 400;
 		opacity: 0.7;
@@ -48,6 +57,6 @@
 	}
 
 	label :global(select) {
-		font-size: var(--font-size-secondary);
+		font-size: var(--font-size-primary);
 	}
 </style>

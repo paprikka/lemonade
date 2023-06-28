@@ -10,18 +10,7 @@
 </svelte:head>
 
 <style>
-	:global(*) {
-		box-sizing: border-box;
-	}
-
-	:global(html, body) {
-		margin: 0;
-		padding: 0;
-		font-size: clamp(1rem, calc(1rem + ((1vw - 0.48rem) * 0.6944)), 1.25rem);
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-			Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		line-height: 1.5;
-
+	:global(:root) {
 		--font-size-hero: 3.052rem;
 		--font-size-xxxl: 2.441rem;
 		--font-size-xxl: 1.953rem;
@@ -42,6 +31,29 @@
 		--color-link: var(--color-accent-1);
 
 		--border-radius: 1rem;
+
+		--dialog-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05), 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1),
+			0 0.1rem 0.1rem rgba(0, 0, 0, 0.07);
+	}
+
+	:global(::backdrop) {
+		/* ! backdrop can't use CSS vars *
+		/* https://stackoverflow.com/questions/58818299/css-variables-not-working-in-dialogbackdrop/ */
+		background-color: rgba(242, 207, 132, 0.2);
+	}
+
+	:global(*) {
+		box-sizing: border-box;
+	}
+
+	:global(html, body) {
+		margin: 0;
+		padding: 0;
+		font-size: clamp(1rem, calc(1rem + ((1vw - 0.48rem) * 0.6944)), 1.25rem);
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+			Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		line-height: 1.5;
+
 		accent-color: var(--color-accent-1);
 	}
 
