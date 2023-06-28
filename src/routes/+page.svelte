@@ -20,14 +20,28 @@
 	let selectedCommunity: Community | null = null;
 	let searchResults: Community[] = [];
 	let searchStatus: 'active' | 'done' | 'error' | 'empty' = 'empty';
+
+	let headerElement: HTMLElement;
+	let hasfocusedAtLeastOnce = false;
+
+	const scrollToInput = () => {
+		if (!isMobile) return;
+
+		hasfocusedAtLeastOnce = true;
+		setTimeout(() => {
+			const scrollY = headerElement.getBoundingClientRect().top - 40;
+			window.scrollTo({ top: scrollY, behavior: 'smooth' });
+		}, 200);
+	};
 </script>
 
 <div class="page-container">
-	<header>
-		<img alt="Lemmy" src={headerIMG} />
+	<header bind:this={headerElement}>
+		<img alt="Lemmy" src={headerIMG} style:display={hasfocusedAtLeastOnce ? 'none' : ''} />
 		<Search
 			on:results={(e) => (searchResults = e.detail)}
 			on:status={(e) => (searchStatus = e.detail)}
+			on:focus={scrollToInput}
 			class="search"
 		/>
 	</header>

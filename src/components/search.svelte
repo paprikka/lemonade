@@ -75,8 +75,14 @@
 			placeholder="e.g. 'baking' or 'hot priests'"
 			value={$searchSettings.query}
 			on:input={handleSearchInput}
-			on:focus={() => (isInputFocused = true)}
-			on:blur={() => (isInputFocused = false)}
+			on:focus={() => {
+				isInputFocused = true;
+				dispatch('focus');
+			}}
+			on:blur={() => {
+				isInputFocused = false;
+				dispatch('blur');
+			}}
 		/>
 		<button
 			class="show-settings"
