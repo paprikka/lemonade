@@ -1,4 +1,13 @@
 <slot />
+<svelte:head>
+	<script
+		async
+		defer
+		data-website-id="f45c804c-4d21-4f3c-bf66-040f234be3cd"
+		data-domains="lemmy.sonnet.io,lemonade.sonnet.io"
+		src="https://sonnet-events.vercel.app/umami.js"
+	></script>
+</svelte:head>
 
 <style>
 	:global(*) {
