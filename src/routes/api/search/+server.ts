@@ -43,20 +43,20 @@ export const GET: RequestHandler = async ({ url }) => {
 					OR: [
 						{
 							title: {
-								contains: query
-								// mode: 'insensitive'
+								contains: query,
+								mode: 'insensitive'
 							}
 						},
 						{
 							name: {
-								contains: query
-								// mode: 'insensitive'
+								contains: query,
+								mode: 'insensitive'
 							}
 						},
 						{
 							description: {
-								contains: query
-								// mode: 'insensitive'
+								contains: query,
+								mode: 'insensitive'
 							}
 						}
 					]
