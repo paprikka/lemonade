@@ -1,6 +1,18 @@
 <script lang="ts">
 	export let content: string;
 	import { marked } from 'marked';
+	marked.use({
+		renderer: {
+			link(href, title, text) {
+				const isRemoteURL = href && href.startsWith('http');
+				if (isRemoteURL) {
+					return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}!</a>`;
+				}
+				const maybeTitleAttr = title ? ` title="${title}"` : '';
+				return `<a href="${href}"${maybeTitleAttr}>${text}</a>`;
+			}
+		}
+	});
 </script>
 
 <div class="md-content">
