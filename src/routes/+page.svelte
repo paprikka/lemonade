@@ -8,8 +8,14 @@
 	import MainSection from '../components/main-section.svelte';
 	import Search from '../components/search.svelte';
 	import headerIMG from './header-bg.webp';
+	import { onMount } from 'svelte';
 
 	export let data;
+	let isMobile = false;
+
+	onMount(() => {
+		isMobile = window.screen.width < 400;
+	});
 
 	let selectedCommunity: Community | null = null;
 	let searchResults: Community[] = [];
@@ -31,7 +37,7 @@
 				{#if searchStatus === 'active' || (searchStatus === 'done' && searchResults.length === 0)}
 					<div class="search-results-placeholder">
 						<ul class="search-results">
-							{#each Array(6) as _}
+							{#each Array(isMobile ? 2 : 6) as _}
 								<li>
 									<CommunitySearchItemPlaceholder active={searchStatus === 'active'} />
 								</li>
