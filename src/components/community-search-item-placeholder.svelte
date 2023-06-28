@@ -1,4 +1,8 @@
-<div class="container">
+<script lang="ts">
+	export let active = true;
+</script>
+
+<div class="container" class:is-active={active}>
 	<article>
 		<div class="thumbnail" />
 		<div class="meta">
@@ -36,7 +40,9 @@
 		background: none;
 		text-align: start;
 		padding: 0;
+	}
 
+	.container.is-active {
 		animation: pulsate 0.5s infinite linear alternate;
 	}
 

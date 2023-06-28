@@ -26,30 +26,39 @@
 		/>
 	</header>
 	<main>
-		{#if searchStatus === 'active'}
-			<ul class="search-results">
-				{#each Array(10) as _}
-					<li>
-						<CommunitySearchItemPlaceholder />
-					</li>
-				{/each}
-			</ul>
-		{/if}
-		{#if searchResults.length}
-			<ul class="search-results">
-				{#each searchResults as community (community.id)}
-					<li>
-						<CommunitySearchItem
-							on:select={() => {
-								selectedCommunity = community;
-							}}
-							{community}
-						/>
-					</li>
-				{/each}
-			</ul>
-		{:else if searchStatus === 'done'}
-			<div class="no-search-placeholder" in:fade>No results</div>
+		{#if searchStatus !== 'empty'}
+			<MainSection title="Search results">
+				{#if searchStatus === 'active' || (searchStatus === 'done' && searchResults.length === 0)}
+					<div class="search-results-placeholder">
+						<ul class="search-results">
+							{#each Array(6) as _}
+								<li>
+									<CommunitySearchItemPlaceholder active={searchStatus === 'active'} />
+								</li>
+							{/each}
+						</ul>
+						{#if searchStatus === 'done'}
+							<span class="no-search-label" transition:fade={{ duration: 200 }}
+								>No communities found</span
+							>
+						{/if}
+					</div>
+				{/if}
+				{#if searchResults.length && searchStatus === 'done'}
+					<ul class="search-results">
+						{#each searchResults as community (community.id)}
+							<li>
+								<CommunitySearchItem
+									on:select={() => {
+										selectedCommunity = community;
+									}}
+									{community}
+								/>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+			</MainSection>
 		{/if}
 
 		<MainSection title="Hot communities">
@@ -174,14 +183,20 @@
 		margin: 0;
 	}
 
-	.no-search-placeholder {
-		z-index: 2;
+	.search-results-placeholder {
 		position: relative;
-		padding: 1rem;
-		text-align: center;
+	}
+
+	.search-results-placeholder .no-search-label {
+		position: absolute;
+		z-index: 2;
+		inset: 0;
+		background-color: rgba(255, 255, 255, 1);
 		border-radius: 0.5rem;
-		background-color: rgba(0, 0, 0, 0.1);
+		text-align: center;
 		font-size: var(--font-size-s);
 		opacity: 0.7;
+		display: grid;
+		place-content: center;
 	}
 </style>
