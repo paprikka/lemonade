@@ -1,15 +1,16 @@
 <footer>
+	<p><a href="/about">about</a></p>
 	<p>
-		Made by 🐐 and <a href="https://sonnet.io">Rafal Pastuszak</a>. Come and
-		<a href="https://sonnet.io/posts/hi">say hi</a>.
+		Made by 🐐 and <a href="https://sonnet.io">Rafal Pastuszak</a>.
 	</p>
 </footer>
 
 <style>
 	footer {
 		padding: 0.5rem 0;
+		display: flex;
+		justify-content: space-between;
 		font-size: var(--font-size-xs);
-		text-align: center;
 		border-top: 0.1rem solid var(--color-text);
 		margin-inline: 1rem;
 		margin-block-start: 2rem;

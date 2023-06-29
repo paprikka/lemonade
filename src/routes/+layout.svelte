@@ -13,7 +13,7 @@
 	></script>
 
 	<SocialMeta
-		title="🍋 Lemonade"
+		title="Lemonade"
 		url="https://lemonade.sonnet.io/"
 		socialImage={{
 			absoluteUrl: 'https://lemonade.sonnet.io/social.png',
