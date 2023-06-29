@@ -9,13 +9,11 @@
 	</header>
 
 	<h2>What is Lemonade?</h2>
-	<p>
-		Lemonade is a <span class="fade">stupid</span> simple Lemmy community browser.
-	</p>
+	<p>Lemonade is a stupid simple Lemmy community browser.</p>
 
 	<h2><em>Why</em> is Lemonade?</h2>
 	<p>
-		People are away moving from sites like Reddit to more open, and friendlier places (<a
+		People are moving away from sites like Reddit to more open, friendlier online communities (<a
 			href="https://join-lemmy.org/"
 			target="_blank">lemmy</a
 		>, <a href="https://kbin.pub/" target="_blank">kbin</a>). I wanted to make this easier to the
@@ -23,9 +21,10 @@
 	</p>
 
 	<p>
-		It uses the list of communities provided by <a href="https://browse.feddit.de/" target="_blank"
-			>Feddit</a
-		>, polled daily.
+		Lemonade uses the list of communities provided by <a
+			href="https://browse.feddit.de/"
+			target="_blank">Feddit</a
+		>, polled daily, and organises it by the number of users and recent activity.
 	</p>
 
 	<h2>Why just Lemmy? Can I see the results from other platforms here?</h2>
@@ -40,7 +39,10 @@
 	<p>
 		Brilliant, then you probably want to <a href="mailto:hello@sonnet.io">click this</a>!
 	</p>
+
+	<a href="/">←back</a>
 </article>
+
 <div class="footer-wrapper">
 	<Footer />
 </div>
@@ -53,7 +55,7 @@
 	}
 
 	article {
-		max-width: 30rem;
+		max-width: 40rem;
 		margin: 0 auto;
 		padding: 1rem;
 	}
@@ -71,9 +73,6 @@
 		font-size: var(--font-size-m);
 	}
 
-	.fade {
-		opacity: 0.4;
-	}
 	.footer-wrapper {
 		max-width: 40rem;
 		margin: 0 auto;
