@@ -9,6 +9,7 @@
 	import Search from '../components/search.svelte';
 	import headerIMG from './header-bg.webp';
 	import { onMount } from 'svelte';
+	import { track } from '../utils/track';
 
 	export let data;
 	let isMobile = false;
@@ -18,6 +19,7 @@
 	});
 
 	let selectedCommunity: Community | null = null;
+	let selectedCollectionType: string | null = null;
 	let searchResults: Community[] = [];
 	let searchStatus: 'active' | 'done' | 'error' | 'empty' = 'empty';
 
@@ -33,6 +35,34 @@
 			window.scrollTo({ top: scrollY, behavior: 'smooth' });
 		}, 200);
 	};
+
+	const selectCommunity = (community: Community, collectionType: string) => {
+		selectedCommunity = community;
+		selectedCollectionType = collectionType;
+		console.log('select-community', {
+			community: community.name,
+			collectionType,
+			instance: new URL(selectedCommunity.fullURL).hostname
+		});
+	};
+
+	const clearCommunitySelection = () => {
+		selectedCommunity = null;
+		selectedCollectionType = null;
+	};
+
+	const handleOnVisit = () => {
+		if (!selectedCommunity) return;
+		if (!selectedCollectionType) return;
+
+		track('visit-community', {
+			community: selectedCommunity.name,
+			instance: new URL(selectedCommunity.fullURL).hostname,
+			collectionType: selectedCollectionType
+		});
+
+		clearCommunitySelection();
+	};
 </script>
 
 <div class="page-container">
@@ -41,7 +71,10 @@
 		<Search
 			on:results={(e) => (searchResults = e.detail)}
 			on:status={(e) => (searchStatus = e.detail)}
-			on:focus={scrollToInput}
+			on:focus={() => {
+				track('search:focus');
+				scrollToInput();
+			}}
 			class="search"
 		/>
 	</header>
@@ -70,7 +103,7 @@
 							<li>
 								<CommunitySearchItem
 									on:select={() => {
-										selectedCommunity = community;
+										selectCommunity(community, 'search');
 									}}
 									{community}
 								/>
@@ -96,7 +129,7 @@
 						<li>
 							<CommunitySearchItem
 								on:select={() => {
-									selectedCommunity = community;
+									selectCommunity(community, 'hot');
 								}}
 								{community}
 							/>
@@ -121,7 +154,7 @@
 						<li transition:fade>
 							<CommunitySearchItem
 								on:select={() => {
-									selectedCommunity = community;
+									selectCommunity(community, 'top');
 								}}
 								{community}
 							/>
@@ -135,7 +168,11 @@
 </div>
 
 {#if selectedCommunity}
-	<CommunityDetail community={selectedCommunity} on:close={() => (selectedCommunity = null)} />
+	<CommunityDetail
+		community={selectedCommunity}
+		on:close={clearCommunitySelection}
+		on:visit={handleOnVisit}
+	/>
 {/if}
 
 <style>

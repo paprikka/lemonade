@@ -4,10 +4,11 @@
 <script lang="ts">
 	import type { Community } from '@prisma/client';
 	import { createEventDispatcher } from 'svelte';
+	import { writable } from 'svelte/store';
 	import { debounced } from '../utils/debounced';
 	import settingsIMG from './icon-options.svg';
 	import SearchSettingsPopup, { type SearchSettings } from './search-settings-popup.svelte';
-	import { writable } from 'svelte/store';
+	import { track } from '../utils/track';
 
 	const searchSettings = writable<SearchSettings>({
 		query: '',
@@ -56,19 +57,21 @@
 		search(settings);
 	});
 
-	let inputElement: HTMLInputElement;
-	// $: {
-	// 	if (isInputFocused) {
-	// 		const scrollY = inputElement.getBoundingClientRect().top - 20;
-	// 		window.scrollTo({ top: scrollY, behavior: 'smooth' });
-	// 	}
-	// }
+	let hasOpenedSettingsOnce = false;
+	$: {
+		if (isSettingsOpen) {
+			track('search-settings:open');
+			hasOpenedSettingsOnce = true;
+		}
+		if (hasOpenedSettingsOnce && !isSettingsOpen) {
+			track('search-settings:close');
+		}
+	}
 </script>
 
 <form class={$$props.class} on:submit|preventDefault>
 	<div class="input-wrapper" class:is-focused={isInputFocused}>
 		<input
-			bind:this={inputElement}
 			type="search"
 			name="query"
 			autocomplete="off"

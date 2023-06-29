@@ -73,6 +73,7 @@
 		<footer>
 			<button
 				on:click={() => {
+					dispatch('visit');
 					window.open(community.fullURL, '_blank');
 				}}>Visit</button
 			>
