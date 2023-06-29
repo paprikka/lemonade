@@ -1,7 +1,8 @@
 <footer>
 	<p><a href="/about">about</a></p>
 	<p>
-		Made by 🐐 and <a href="https://sonnet.io">Rafal Pastuszak</a>.
+		Made by 🐐 and <a href="https://sonnet.io" target="_blank">Rafal Pastuszak</a>, data from
+		<a href="https://browse.feddit.de" target="_blank">feddit</a>.
 	</p>
 </footer>
 
