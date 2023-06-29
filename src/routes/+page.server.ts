@@ -71,7 +71,6 @@ export const load = async (event) => {
 		take: 6
 	});
 
-	console.log('topCommunities', topCommunities);
 	return {
 		deferred: {
 			topCommunities,

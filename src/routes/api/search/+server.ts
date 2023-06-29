@@ -6,10 +6,8 @@ const prisma = new PrismaClient();
 
 export const GET: RequestHandler = async ({ url }) => {
 	const params = new URLSearchParams(url.search);
-	console.log(params);
 	const query = params.get('query');
 	const paramsDict = Object.fromEntries(params.entries());
-	console.log(paramsDict);
 
 	if (!query) throw error(400, 'Missing query parameter');
 
@@ -33,8 +31,6 @@ export const GET: RequestHandler = async ({ url }) => {
 			? sortingMap[sortByParam as keyof typeof sortingMap]
 			: 'countSubscribers']: 'desc'
 	};
-
-	console.log(orderBy);
 
 	const communities = await prisma.community.findMany({
 		where: {
