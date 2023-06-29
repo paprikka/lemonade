@@ -191,7 +191,6 @@
 	}
 
 	.thumbnail:empty {
-		background: rgba(0, 0, 0, 0.1);
 		width: var(--img-w);
 		aspect-ratio: 1;
 		display: flex;
@@ -200,6 +199,9 @@
 		padding: 1rem;
 		overflow: hidden;
 		border-radius: 0.75rem;
+
+		background-color: rgba(0, 0, 0, 0.03);
+		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 	}
 
 	.thumbnail:empty::after {
