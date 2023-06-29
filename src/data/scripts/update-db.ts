@@ -11,6 +11,7 @@ const main = async () => {
 
 	log('Removing old entries...');
 
+	// TODO: don't run this if we can't fetch or create the new entries, i.e. do that as late as possible
 	await prisma.instance.deleteMany({});
 	await prisma.community.deleteMany({});
 
@@ -28,6 +29,10 @@ const main = async () => {
 	const usedDomains = new Set<string>();
 
 	const uniqueInstances = apiInstances.filter((instance) => {
+		if (!instance.site_view?.site?.actor_id) {
+			log(`Invalid instance entry: ${JSON.stringify(instance)}, skipping...`);
+			return false;
+		}
 		const domain = urlToDomain(instance.site_view.site.actor_id);
 		if (usedDomains.has(domain)) return false;
 
@@ -76,6 +81,9 @@ const main = async () => {
 	});
 
 	await prisma.community.createMany({ data: communitiesToAdd });
+
+	log(`Added ${communitiesToAdd.length} communities and ${instancesToAdd.length} instances.`);
+	log('Done!');
 };
 
 main();
