@@ -40,6 +40,13 @@
 		background: none;
 		text-align: start;
 		padding: 0;
+		--border-radius: 0.5rem;
+	}
+
+	@media (min-width: 440px) {
+		.container {
+			--border-radius: 1rem;
+		}
 	}
 
 	.container.is-active {
@@ -56,20 +63,34 @@
 	}
 
 	.container article {
-		padding: 0.5rem;
+		padding: 0.25rem;
 		border-radius: var(--border-radius);
 		display: flex;
 		cursor: pointer;
 	}
 
+	@media (min-width: 440px) {
+		.container article {
+			padding: 0.5rem;
+		}
+	}
+
 	.thumbnail {
-		width: 5rem;
-		height: 5rem;
-		margin-right: 1rem;
+		width: 4rem;
+		height: 4rem;
+		margin-right: 0.75rem;
 		overflow: hidden;
+		background-color: rgba(0, 0, 0, 0.1);
 		border-radius: calc(var(--border-radius) * 0.8);
 		flex-shrink: 0;
-		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	@media (min-width: 440px) {
+		.thumbnail {
+			width: 5rem;
+			height: 5rem;
+			margin-right: 1rem;
+		}
 	}
 
 	.name {

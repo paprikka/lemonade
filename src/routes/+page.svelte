@@ -51,7 +51,7 @@
 				{#if searchStatus === 'active' || (searchStatus === 'done' && searchResults.length === 0)}
 					<div class="search-results-placeholder">
 						<ul class="search-results">
-							{#each Array(isMobile ? 2 : 6) as _}
+							{#each Array(isMobile ? 3 : 6) as _}
 								<li>
 									<CommunitySearchItemPlaceholder active={searchStatus === 'active'} />
 								</li>
@@ -190,12 +190,13 @@
 		width: 100%;
 		overflow: hidden;
 		grid-template-columns: 1fr;
-		gap: 1rem;
+		gap: 0.5rem;
 	}
 
-	@media (min-width: 400px) {
+	@media (min-width: 440px) {
 		.search-results {
 			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
 		}
 	}
 

@@ -20,4 +20,11 @@
 	section:not(:first-of-type) {
 		border-top: 1px solid rgba(0, 0, 0, 0.1);
 	}
+
+	section:first-of-type {
+		margin-block-start: 0;
+	}
+	section:first-of-type h2 {
+		margin-block-start: 0;
+	}
 </style>

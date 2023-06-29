@@ -60,6 +60,13 @@
 		text-align: start;
 		background: none;
 		color: var(--color-text);
+		--border-radius: 0.5rem;
+	}
+
+	@media (min-width: 440px) {
+		.container {
+			--border-radius: 1rem;
+		}
 	}
 
 	.container:focus-visible {
@@ -71,11 +78,17 @@
 	}
 
 	.container article {
-		padding: 0.5rem;
+		padding: 0.25rem;
 		border-radius: var(--border-radius);
 		display: flex;
 		cursor: pointer;
 		transition: scale 0.2s;
+	}
+
+	@media (min-width: 440px) {
+		.container article {
+			padding: 0.5rem;
+		}
 	}
 
 	@media (hover: hover) {
@@ -85,17 +98,31 @@
 	}
 
 	.container:active article {
-		background-color: var(--color-accent-2);
-		scale: 0.95;
+		background-color: var(--color-accent-2-20);
+	}
+
+	@media (min-width: 440px) {
+		.container:active article {
+			background-color: var(--color-accent-2);
+			scale: 0.95;
+		}
 	}
 
 	.thumbnail {
-		width: 5rem;
-		height: 5rem;
-		margin-right: 1rem;
+		width: 4rem;
+		height: 4rem;
+		margin-right: 0.75rem;
 		overflow: hidden;
 		border-radius: calc(var(--border-radius) * 0.8);
 		flex-shrink: 0;
+	}
+
+	@media (min-width: 440px) {
+		.thumbnail {
+			width: 5rem;
+			height: 5rem;
+			margin-right: 1rem;
+		}
 	}
 
 	.thumbnail:empty {
