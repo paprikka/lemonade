@@ -48,12 +48,17 @@
 		--color-accent-1-20: rgba(249, 57, 13, 0.2);
 		--color-accent-2: #f4d184;
 		--color-accent-2-20: rgba(242, 207, 132, 0.2);
+		--color-accent-2-40: rgba(242, 207, 132, 0.4);
 		--color-link: var(--color-accent-1);
 
 		--border-radius: 1rem;
 
 		--dialog-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05), 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1),
 			0 0.1rem 0.1rem rgba(0, 0, 0, 0.07);
+	}
+
+	:global(::selection) {
+		background-color: var(--color-accent-2-40);
 	}
 
 	:global(::backdrop) {

@@ -67,7 +67,11 @@
 
 <div class="page-container">
 	<header bind:this={headerElement}>
-		<img alt="Lemmy" src={headerIMG} style:display={hasfocusedAtLeastOnce ? 'none' : ''} />
+		<div class="img-wrapper" style:display={hasfocusedAtLeastOnce ? 'none' : ''}>
+			<img alt="Lemmy" src={headerIMG} />
+			<h1>Lemonade</h1>
+			<h2>The fruitiest way to browse Lemmy communities</h2>
+		</div>
 		<Search
 			on:results={(e) => (searchResults = e.detail)}
 			on:status={(e) => (searchStatus = e.detail)}
@@ -203,11 +207,32 @@
 		background-image: linear-gradient(var(--color-bg), transparent);
 	}
 
-	header > img {
+	.img-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 1rem;
+		max-width: 20rem;
+	}
+
+	.img-wrapper h1 {
+		margin: 0;
+		font-size: var(--font-size-hero);
+		line-height: 1;
+	}
+	.img-wrapper h2 {
+		margin: 0;
+		line-height: 1;
+		font-size: var(--font-size-s);
+		font-weight: normal;
+	}
+
+	.img-wrapper > img {
 		max-width: 10rem;
 		align-self: center;
 		height: auto;
-		margin: 2rem 0 3rem;
+		margin: 2rem 0 -2rem;
 	}
 
 	header :global(.search) {
