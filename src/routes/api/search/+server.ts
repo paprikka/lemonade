@@ -57,10 +57,9 @@ export const GET: RequestHandler = async ({ url }) => {
 						}
 					]
 				},
-				// TODO: we lost all the nsft communities from the dataset, might need to remove
-				{
-					nsfw: paramsDict.nsfw === 'true' ? true : false
-				},
+
+				// TODO: we lost all the nsfw communities from the dataset, might need to remove this option
+				...(paramsDict.nsfw === 'true' ? [] : [{ nsfw: false }]),
 				...(paramsDict.skipEmpty === 'true'
 					? [
 							{
