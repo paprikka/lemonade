@@ -70,7 +70,7 @@
 		<div class="img-wrapper" style:display={hasfocusedAtLeastOnce ? 'none' : ''}>
 			<img alt="Lemmy" src={headerIMG} />
 			<h1>Lemonade</h1>
-			<h2>The fruitiest way to browse Lemmy communities</h2>
+			<h2>The <span class="fruity">fruitiest</span> way to browse Lemmy communities</h2>
 		</div>
 		<Search
 			on:results={(e) => (searchResults = e.detail)}
@@ -221,6 +221,51 @@
 		font-size: var(--font-size-hero);
 		line-height: 1;
 	}
+
+	.fruity {
+		background: linear-gradient(
+			to right,
+			#000 0%,
+			#000 20%,
+			yellow,
+			lime,
+			orange,
+			tomato,
+			yellow,
+			orange,
+			/* #ff0000aa,
+			#ff7f00aa,
+			#ffff00aa,
+			#00ff00aa,
+			#0000ffaa,
+			#4b0082aa,
+			#8f00ffaa, */
+				/* #4b0082aa,
+			#0000ffaa,
+			#00ff00aa,
+			#ffff00aa,
+			#ff7f00aa,
+			#ff0000aa, */ #000 80%,
+			#000 100%
+		);
+
+		background-size: 600%;
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+
+		animation: fruity-enter 3s ease-in-out both;
+	}
+
+	@keyframes fruity-enter {
+		from {
+			background-position: 0;
+		}
+		to {
+			background-position: 100%;
+		}
+	}
+
 	.img-wrapper h2 {
 		margin: 0;
 		line-height: 1;

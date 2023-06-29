@@ -43,7 +43,7 @@
 
 		--color-text: #222222;
 		--color-text-inverted: #ffffff;
-		--color-bg: #fff;
+		--color-bg: #ffffff;
 		--color-accent-1: rgb(249, 57, 13);
 		--color-accent-1-20: rgba(249, 57, 13, 0.2);
 		--color-accent-2: #f4d184;
