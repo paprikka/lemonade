@@ -16,7 +16,12 @@
 		People are moving away from sites like Reddit to more open, friendlier online communities (<a
 			href="https://join-lemmy.org/"
 			target="_blank">lemmy</a
-		>, <a href="https://kbin.pub/" target="_blank">kbin</a>). I wanted to make this easier to the
+		>, <a href="https://kbin.pub/" target="_blank">kbin</a>).
+	</p>
+
+	<p>
+		These tools are easy to use, but finding the right community can be a bit of a pain if you're
+		just getting started with federated social media. I wanted to make this easier especially to the
 		less techie users who might find the proces daunting.
 	</p>
 
