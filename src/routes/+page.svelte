@@ -278,6 +278,7 @@
 		align-self: center;
 		height: auto;
 		margin: 2rem 0 -2rem;
+		aspect-ratio: 700/606;
 	}
 
 	header :global(.search) {
