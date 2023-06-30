@@ -88,6 +88,7 @@
 			}}
 		/>
 		<button
+			type="button"
 			class="show-settings"
 			style:--bg={`url(${settingsIMG})`}
 			class:is-active={isSettingsOpen}
