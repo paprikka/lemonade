@@ -6,7 +6,7 @@
 			link(href, title, text) {
 				const isRemoteURL = href && href.startsWith('http');
 				if (isRemoteURL) {
-					return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}!</a>`;
+					return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
 				}
 				const maybeTitleAttr = title ? ` title="${title}"` : '';
 				return `<a href="${href}"${maybeTitleAttr}>${text}</a>`;
