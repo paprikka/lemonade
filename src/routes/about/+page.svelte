@@ -5,7 +5,7 @@
 <article>
 	<header>
 		<h1>About</h1>
-		<a href="/">←back</a>
+		<a href="/">back</a>
 	</header>
 
 	<h2>What is Lemonade?</h2>
@@ -45,7 +45,7 @@
 		Brilliant, then you probably want to <a href="mailto:hello@sonnet.io">click this</a>!
 	</p>
 
-	<a href="/">←back</a>
+	<a href="/">back</a>
 </article>
 
 <div class="footer-wrapper">
@@ -81,5 +81,15 @@
 	.footer-wrapper {
 		max-width: 40rem;
 		margin: 0 auto;
+	}
+
+	a[href='/'] {
+		position: relative;
+		padding-inline-start: 1em;
+	}
+	a[href='/']::before {
+		content: '←';
+		position: absolute;
+		left: 0;
 	}
 </style>
