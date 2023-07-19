@@ -60,16 +60,16 @@
 	}
 	.search-results ul > li {
 		margin: 0;
+		width: 100%;
+		overflow-x: hidden;
 	}
 
 	.search-results {
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		display: grid;
 		width: 100%;
 		overflow: hidden;
-		grid-template-columns: 1fr;
 		gap: 0.5rem;
 	}
 
