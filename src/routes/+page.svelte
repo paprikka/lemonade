@@ -91,6 +91,7 @@
 		{/if}
 
 		<MainSection title="Hot communities">
+			<a slot="header" class="section-link" href="/hot">See all</a>
 			{#await data.deferred.hotCommunities}
 				<SearchResults communities={[]} isLoading={true} />
 			{:then hotCommunities}
@@ -124,7 +125,7 @@
 {/if}
 
 <style>
-	main {
-		padding: 1rem;
+	a.section-link {
+		font-size: var(--font-size-m);
 	}
 </style>

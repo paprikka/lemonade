@@ -17,7 +17,8 @@
 <style>
 	header {
 		position: relative;
-		padding: 1rem;
+		padding: 0 0 1rem;
+		margin-block-end: 1rem;
 		z-index: 1;
 
 		background-color: var(--color-bg);
@@ -33,6 +34,7 @@
 		left: 0;
 		right: 0;
 		background-image: linear-gradient(var(--color-bg), transparent);
+		pointer-events: none;
 	}
 
 	.img-wrapper {

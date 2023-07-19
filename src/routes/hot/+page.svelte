@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { Community } from '@prisma/client';
-	import { fade } from 'svelte/transition';
 	import CommunityDetail from '../../components/community-detail.svelte';
-	import CommunitySearchItemPlaceholder from '../../components/community-search-item-placeholder.svelte';
 	import Footer from '../../components/footer.svelte';
+	import Header from '../../components/header.svelte';
 	import MainSection from '../../components/main-section.svelte';
 	import PageContainer from '../../components/page-container.svelte';
 	import SearchResults from '../../components/search-results.svelte';
@@ -22,12 +21,17 @@
 		loadedCommunities = _;
 		isLoading = false;
 	}); // Can't rely on #await as we want to keep the transitions smooth
+
+	let headerElement: HTMLElement;
 </script>
 
 <PageContainer>
+	<Header bind:headerElement />
 	<MainSection
-		title={isLoading ? 'Hot communities' : `Hot communities (${loadedCommunities.length})`}
+		isSticky
+		title={isLoading ? 'All hot communities' : `All hot communities (${loadedCommunities.length})`}
 	>
+		<a href="/" slot="header">Back</a>
 		<SearchResults
 			on:select={({ detail }) => selectCommunity(detail, 'hot')}
 			communities={loadedCommunities}
@@ -45,3 +49,19 @@
 		on:visit={handleOnVisit}
 	/>
 {/if}
+
+<style>
+	a[href='/'] {
+		font-size: var(--font-size-m);
+	}
+	/* TODO: remove duplicated styles with /about */
+	a[href='/'] {
+		position: relative;
+		padding-inline-start: 1em;
+	}
+	a[href='/']::before {
+		content: '←';
+		position: absolute;
+		left: 0;
+	}
+</style>
