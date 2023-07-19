@@ -20,6 +20,10 @@ export const load = async (event) => {
 		orderBy: { countUsersActiveDay: 'desc' }
 	});
 
+	event.setHeaders({
+		'Cache-Control': 'max-age=0, s-maxage=86400'
+	});
+
 	return {
 		deferred: {
 			communities
