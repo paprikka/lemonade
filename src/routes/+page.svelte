@@ -1,15 +1,14 @@
 <script lang="ts">
 	import type { Community } from '@prisma/client';
-	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 	import CommunityDetail from '../components/community-detail.svelte';
-	import CommunitySearchItemPlaceholder from '../components/community-search-item-placeholder.svelte';
-	import CommunitySearchItem from '../components/community-search-item.svelte';
 	import Footer from '../components/footer.svelte';
 	import MainSection from '../components/main-section.svelte';
+	import PageContainer from '../components/page-container.svelte';
+	import SearchResults from '../components/search-results.svelte';
 	import Search from '../components/search.svelte';
-	import headerIMG from './header-bg.webp';
-	import { onMount } from 'svelte';
 	import { track } from '../utils/track';
+	import headerIMG from './header-bg.webp';
 
 	export let data;
 	let isMobile = false;
@@ -65,7 +64,7 @@
 	};
 </script>
 
-<div class="page-container">
+<PageContainer>
 	<header bind:this={headerElement}>
 		<div class="img-wrapper" style:display={hasfocusedAtLeastOnce ? 'none' : ''}>
 			<img alt="Lemmy" src={headerIMG} />
@@ -85,91 +84,39 @@
 	<main>
 		{#if searchStatus !== 'empty'}
 			<MainSection title="Search results">
-				{#if searchStatus === 'active' || (searchStatus === 'done' && searchResults.length === 0)}
-					<div class="search-results-placeholder">
-						<ul class="search-results">
-							{#each Array(isMobile ? 3 : 6) as _}
-								<li>
-									<CommunitySearchItemPlaceholder active={searchStatus === 'active'} />
-								</li>
-							{/each}
-						</ul>
-						{#if searchStatus === 'done'}
-							<span class="no-search-label" transition:fade={{ duration: 200 }}
-								>No communities found.</span
-							>
-						{/if}
-					</div>
-				{/if}
-				{#if searchResults.length && searchStatus === 'done'}
-					<ul class="search-results">
-						{#each searchResults as community (community.id)}
-							<li>
-								<CommunitySearchItem
-									on:select={() => {
-										selectCommunity(community, 'search');
-									}}
-									{community}
-								/>
-							</li>
-						{/each}
-					</ul>
-				{/if}
+				<SearchResults
+					communities={searchResults}
+					on:select={({ detail }) => selectCommunity(detail, 'search')}
+					isLoading={searchStatus === 'active'}
+					numberOfPlaceholders={isMobile ? 3 : 6}
+				/>
 			</MainSection>
 		{/if}
 
 		<MainSection title="Hot communities">
 			{#await data.deferred.hotCommunities}
-				<ul class="search-results" transition:fade>
-					{#each Array(6) as _}
-						<li>
-							<CommunitySearchItemPlaceholder />
-						</li>
-					{/each}
-				</ul>
+				<SearchResults communities={[]} isLoading={true} />
 			{:then hotCommunities}
-				<ul class="search-results" transition:fade>
-					{#each hotCommunities as community}
-						<li>
-							<CommunitySearchItem
-								on:select={() => {
-									selectCommunity(community, 'hot');
-								}}
-								{community}
-							/>
-						</li>
-					{/each}
-				</ul>
+				<SearchResults
+					on:select={({ detail }) => selectCommunity(detail, 'hot')}
+					communities={hotCommunities}
+				/>
 			{/await}
 		</MainSection>
 
 		<MainSection title="Top communities">
 			{#await data.deferred.topCommunities}
-				<ul class="search-results">
-					{#each Array(6) as _}
-						<li>
-							<CommunitySearchItemPlaceholder />
-						</li>
-					{/each}
-				</ul>
+				<SearchResults communities={[]} isLoading={true} />
 			{:then topCommunities}
-				<ul class="search-results" transition:fade>
-					{#each topCommunities as community}
-						<li transition:fade>
-							<CommunitySearchItem
-								on:select={() => {
-									selectCommunity(community, 'top');
-								}}
-								{community}
-							/>
-						</li>
-					{/each}
-				</ul>
+				<SearchResults
+					on:select={({ detail }) => selectCommunity(detail, 'top')}
+					communities={topCommunities}
+				/>
 			{/await}
 		</MainSection>
 	</main>
 	<Footer />
-</div>
+</PageContainer>
 
 {#if selectedCommunity}
 	<CommunityDetail
@@ -180,16 +127,9 @@
 {/if}
 
 <style>
-	.page-container {
-		max-width: 40rem;
-		margin: 0 auto;
-
-		--padding: 1rem;
-	}
-
 	header {
 		position: relative;
-		padding: var(--padding);
+		padding: 1rem;
 		z-index: 1;
 
 		background-color: var(--color-bg);
@@ -233,19 +173,7 @@
 			tomato,
 			yellow,
 			orange,
-			/* #ff0000aa,
-			#ff7f00aa,
-			#ffff00aa,
-			#00ff00aa,
-			#0000ffaa,
-			#4b0082aa,
-			#8f00ffaa, */
-				/* #4b0082aa,
-			#0000ffaa,
-			#00ff00aa,
-			#ffff00aa,
-			#ff7f00aa,
-			#ff0000aa, */ #000 80%,
+			#000 80%,
 			#000 100%
 		);
 
@@ -287,45 +215,6 @@
 	}
 
 	main {
-		padding: var(--padding);
-	}
-
-	.search-results {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		width: 100%;
-		overflow: hidden;
-		grid-template-columns: 1fr;
-		gap: 0.5rem;
-	}
-
-	@media (min-width: 440px) {
-		.search-results {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 1rem;
-		}
-	}
-
-	.search-results > li {
-		margin: 0;
-	}
-
-	.search-results-placeholder {
-		position: relative;
-	}
-
-	.search-results-placeholder .no-search-label {
-		position: absolute;
-		z-index: 2;
-		inset: 0;
-		background-color: rgba(255, 255, 255, 1);
-		border-radius: 0.5rem;
-		text-align: center;
-		font-size: var(--font-size-s);
-		opacity: 0.7;
-		display: grid;
-		place-content: center;
+		padding: 1rem;
 	}
 </style>
