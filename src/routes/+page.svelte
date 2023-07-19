@@ -113,8 +113,8 @@
 			{/await}
 		</MainSection>
 	</main>
-	<Footer />
 </PageContainer>
+<Footer />
 
 {#if selectedCommunity}
 	<CommunityDetail
