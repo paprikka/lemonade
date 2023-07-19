@@ -48,7 +48,6 @@
 		margin-block-start: calc(1rem + 1px);
 		z-index: 1;
 		background-color: var(--color-bg);
-		transition: font-size 0.2s ease-in-out;
 	}
 
 	h2.is-pinned {
