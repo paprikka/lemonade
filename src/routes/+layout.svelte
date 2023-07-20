@@ -20,7 +20,7 @@
 			height: 506,
 			width: 1012
 		}}
-		description="The fruitiest way to browse Lemmy communities."
+		description="Browse and discover Lemmy communities the fruity way."
 		siteConfig={{
 			name: 'Lemonade',
 			twitterCreator: '@rafalpast',
