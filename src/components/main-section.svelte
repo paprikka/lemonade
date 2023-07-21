@@ -21,7 +21,7 @@
 </script>
 
 <section>
-	<h2 bind:this={stickRef} class:is-pinned={isPinned} class:is-sticky={isSticky}>
+	<h2 bind:this={stickRef} class:is-pinned={isPinned && isSticky} class:is-sticky={isSticky}>
 		{title}<slot name="header" />
 	</h2>
 	<slot />
